@@ -677,6 +677,11 @@ SECTION "Mobile News Data", ROMX
 INCLUDE "mobile/news/news.asm"
 
 
+SECTION "PCM Engine", ROMX
+
+INCLUDE "audio/pcm_play.asm"
+
+
 SECTION "Crystal Events", ROMX
 
 INCLUDE "engine/events/battle_tower/load_trainer.asm"

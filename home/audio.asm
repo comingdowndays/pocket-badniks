@@ -128,6 +128,19 @@ PlayMusic2::
 
 PlayCry::
 ; Play cry de.
+	push hl
+	push de
+	push bc
+	push af
+
+	ld e, 0
+	rst SetupPCM
+
+	pop af
+	pop bc
+	pop de
+	pop hl
+	ret
 
 	push hl
 	push de

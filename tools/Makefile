@@ -8,6 +8,7 @@ tools := \
 	gfx \
 	lzcomp \
 	make_patch \
+	pcm \
 	png_dimensions \
 	pokemon_animation \
 	pokemon_animation_graphics \
