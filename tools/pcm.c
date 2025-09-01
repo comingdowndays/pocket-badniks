@@ -70,7 +70,7 @@ uint8_t *wav2pcm(uint8_t *wavdata, long wavsize, size_t *pcmsize) {
 	}
 
 	// Pack 8 WAV samples per PCM byte, clamping each to 0 or 1
-	*pcmsize = (size_t)((num_samples + 7) / 8);
+	/* *pcmsize = (size_t)((num_samples + 7) / 8);
 	uint8_t *pcmdata = xmalloc(*pcmsize);
 	for (int64_t i = 0; i < num_samples; i += 8) {
 		uint8_t v = 0;
@@ -78,6 +78,15 @@ uint8_t *wav2pcm(uint8_t *wavdata, long wavsize, size_t *pcmsize) {
 			v |= (wavdata[sample_offset + i + j] > 0x80) << (7 - j);
 		}
 		pcmdata[i / 8] = v;
+	}*/
+	*pcmsize = (size_t)((num_samples + 7) / 4);
+	uint8_t *pcmdata = xmalloc(*pcmsize);
+	for (int64_t i = 0; i < num_samples; i += 4) {
+		uint8_t v = 0;
+		for (int64_t j = 0; j < 4 && i + j < num_samples; j++) {
+			v |= ((wavdata[sample_offset + i + j] >> 6) & 3) << ((3 - j) * 2);
+		}
+		pcmdata[i / 4] = v;
 	}
 	return pcmdata;
 }

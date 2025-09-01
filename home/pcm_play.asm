@@ -1,45 +1,52 @@
+def SAMPLE_SPEED equ 3
+def BITS_PER_SAMPLE equ 2
+
 PlayPCM::
 	ldh a, [hROMBankBackup]
 	push af
-	ld a, b
+	ld a, b ; load PCM's bank
 	call Bankswitch
 	ld a, [hli]
-	ld c, a
+	ld c, a ; lower byte of PCM length
 	ld a, [hli]
-	ld b, a
+	ld b, a ; high byte of PCM length
 .loop
 	ld a, [hli]
-	ld d, a
-	ld a, $3
+	ld d, a ; read sample byte
+	ld a, SAMPLE_SPEED
 .playSingleSample
 	dec a
 	jr nz, .playSingleSample
 
-REPT 7
-	call LoadNextSoundClipSample
-	call PlaySoundClipSample
+; transfer sound data
+REPT 3
+	call ExecutePCM
+	call WaitSample
 ENDR
 
-	call LoadNextSoundClipSample
+	call ExecutePCM
+; decrement sample length
 	dec bc
 	ld a, c
-	or b
+	or b ; if b and c are 0
 	jr nz, .loop
+; bankswitch back
 	pop af
 	call Bankswitch
 	ret
 
-LoadNextSoundClipSample::
+ExecutePCM::
+; sample player	
 	ld a, d
-	and $80
+	and $C0
 	srl a
-	srl a
-	ldh [rNR32], a
+	ldh [rNR32], a ; manipulate the wave volume
+	sla d
 	sla d
 	ret
 
-PlaySoundClipSample::
-	ld a, $3
+WaitSample::
+	ld a, SAMPLE_SPEED
 .loop
 	dec a
 	jr nz, .loop

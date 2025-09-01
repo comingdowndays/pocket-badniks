@@ -1539,10 +1539,11 @@ _OakText1::
 	prompt
 
 _OakText2::
-	text "This world is in-"
-	line "habited by crea-"
-	cont "tures that we call"
-	cont "#MON.@"
+	; text "This world is in-"
+	; line "habited by crea-"
+	; cont "tures that we call"
+	; cont "#MON.@"
+	text "This@"
 	text_end
 
 _OakText3::
