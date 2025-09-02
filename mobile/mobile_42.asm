@@ -309,14 +309,6 @@ Function108201:
 	predef GetAnimatedFrontpic
 	ret
 
-Function108219: ; unreferenced
-	ld [wCurPartySpecies], a
-	hlcoord 7, 2
-	ld d, $0
-	ld e, ANIM_MON_TRADE
-	predef AnimateFrontpic
-	ret
-
 Function108229:
 	ld [wCurPartySpecies], a
 	hlcoord 7, 2
@@ -1557,10 +1549,6 @@ Function108bec:
 	text_far _MobileForPartnersMonText
 	text_end
 
-.MobilePlayersMonTradeText: ; unreferenced
-	text_far _MobilePlayersMonTradeText
-	text_end
-
 Function108c16:
 	ld a, $90
 	ldh [hWY], a
@@ -1636,82 +1624,6 @@ Function108c80:
 	ldh [rVBK], a
 	ret
 
-DebugMobileTrade: ; unreferenced
-; localization error: NAME_LENGTH (11) should be NAME_LENGTH_JAPANESE (6) here
-
-	ld hl, .DebugTradeData
-	ld a, [hli]
-	ld [wPlayerTrademonSpecies], a
-
-	ld de, wPlayerTrademonSenderName
-	ld c, NAME_LENGTH
-.your_name_loop
-	ld a, [hli]
-	ld [de], a
-	inc de
-	dec c
-	jr nz, .your_name_loop
-
-	ld de, wPlayerTrademonID
-	ld c, 2
-.your_id_loop
-	ld a, [hli]
-	ld [de], a
-	inc de
-	dec c
-	jr nz, .your_id_loop
-
-	ld de, wPlayerTrademonOTName
-	ld c, NAME_LENGTH
-.your_ot_loop
-	ld a, [hli]
-	ld [de], a
-	inc de
-	dec c
-	jr nz, .your_ot_loop
-
-	ld a, [hli]
-	ld [wOTTrademonSpecies], a
-
-	ld de, wOTTrademonSenderName
-	ld c, NAME_LENGTH
-.their_name_loop
-	ld a, [hli]
-	ld [de], a
-	inc de
-	dec c
-	jr nz, .their_name_loop
-
-	ld de, wOTTrademonID
-	ld c, 2
-.their_id_loop
-	ld a, [hli]
-	ld [de], a
-	inc de
-	dec c
-	jr nz, .their_id_loop
-
-	ld de, wOTTrademonOTName
-	ld c, NAME_LENGTH
-.their_ot_loop
-	ld a, [hli]
-	ld [de], a
-	inc de
-	dec c
-	jr nz, .their_ot_loop
-
-	ret
-
-.DebugTradeData:
-	db VENUSAUR
-	db "ゲーフり@@"
-	dw $0123
-	db "かびーん@@"
-	db CHARIZARD
-	db "クりーチャ@"
-	dw $0456
-	db "マツミヤ@@"
-
 LoadMobileAdapterPalette:
 	ld a, [wc74e]
 	and $7f
@@ -1730,34 +1642,12 @@ LoadMobileAdapterPalette:
 	ret
 
 MobileTradeSpritesGFX:
-INCBIN "gfx/mobile/mobile_trade_sprites.2bpp.lz"
-
 MobileTradeGFX:
-INCBIN "gfx/mobile/mobile_trade.2bpp.lz"
-
 MobileTradeTilemapLZ:
-INCBIN "gfx/mobile/mobile_trade.tilemap.lz"
-
 MobileTradeAttrmapLZ:
-INCBIN "gfx/mobile/mobile_trade.attrmap.lz"
-
-UnusedMobilePulsePalettes: ; unreferenced
-INCLUDE "gfx/mobile/unused_mobile_pulses.pal"
-
 MobileTradeBGPalettes:
-INCLUDE "gfx/mobile/mobile_trade_bg.pal"
-
 MobileTradeOB1Palettes:
-INCLUDE "gfx/mobile/mobile_trade_ob1.pal"
-
 MobileTradeOB2Palettes:
-INCLUDE "gfx/mobile/mobile_trade_ob2.pal"
-
 MobileCable1GFX:
-INCBIN "gfx/mobile/mobile_cable_1.2bpp"
-
 MobileCable2GFX:
-INCBIN "gfx/mobile/mobile_cable_2.2bpp"
-
 MobileAdapterPalettes:
-INCLUDE "gfx/mobile/mobile_adapters.pal"

@@ -308,8 +308,6 @@ Unknown_116005:
 	dbsprite   1,   2, 0, 0, $63, $01
 
 MobileDialingGFX::
-INCBIN "gfx/mobile/dialing.2bpp"
-
 Function11615a:
 	xor a
 	ld [wc30d], a
@@ -474,12 +472,6 @@ Function1161d5:
 	inc a
 	ld [wc319], a
 	ret
-
-MenuHeader_11628c: ; unreferenced
-	db MENU_BACKUP_TILES ; flags
-	menu_coords 0, 6, SCREEN_WIDTH - 1, SCREEN_HEIGHT - 1
-	dw NULL
-	db 0 ; default option
 
 Function116294:
 	farcall Function170d02

@@ -1679,9 +1679,6 @@ LoadStation_EvolutionRadio:
 	ld de, UnownStationName
 	ret
 
-DummyLoadStation: ; unreferenced
-	ret
-
 RadioMusicRestartDE:
 	push de
 	ld a, e

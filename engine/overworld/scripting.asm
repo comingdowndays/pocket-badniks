@@ -2202,9 +2202,6 @@ Script_writeunusedbyte:
 	ld [wUnusedScriptByte], a
 	ret
 
-UnusedClosetextScript: ; unreferenced
-	closetext
-
 Script_closetext:
 	call HDMATransferTilemapAndAttrmap_Menu
 	call CloseText

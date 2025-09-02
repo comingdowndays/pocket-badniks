@@ -93,108 +93,6 @@ Clears5_a89a:
 	call CloseSRAM
 	ret
 
-Function170c06: ; unreferenced
-	ld a, BANK(s5_a894)
-	call OpenSRAM
-	ld hl, s5_a894
-	ld a, [wBattleResult]
-	and a ; WIN?
-	jr nz, .asm_170c15
-	inc [hl]
-
-.asm_170c15
-	inc hl
-	inc hl
-	ld a, [s5_a89a + 1]
-	add [hl]
-	ld [hld], a
-	ld a, [s5_a89a]
-	adc [hl]
-	ld [hli], a
-	jr nc, .asm_170c27
-	ld a, $ff
-	ld [hld], a
-	ld [hli], a
-
-.asm_170c27
-	inc hl
-	push hl
-	ld de, 0
-	xor a
-	ld [wTempByteValue], a
-.asm_170c30
-	ld hl, wPartyMon1HP
-	ld a, [wTempByteValue]
-	call GetPartyLocation
-	ld a, [hli]
-	ld b, a
-	ld c, [hl]
-	inc hl
-	inc hl
-	ld a, [hld]
-	sub c
-	ld c, a
-	ld a, [hl]
-	sbc b
-	ld b, a
-	push de
-	pop hl
-	add hl, bc
-	push hl
-	pop de
-	jr c, .asm_170c58
-	ld a, [wTempByteValue]
-	inc a
-	ld [wTempByteValue], a
-	cp $3
-	jr c, .asm_170c30
-	jr .asm_170c5b
-
-.asm_170c58
-	ld de, -1
-
-.asm_170c5b
-	pop hl
-	inc hl
-	ld a, e
-	add [hl]
-	ld [hld], a
-	ld a, d
-	adc [hl]
-	ld [hli], a
-	jr nc, .asm_170c69
-	ld a, $ff
-	ld [hld], a
-	ld [hli], a
-
-.asm_170c69
-	inc hl
-	push hl
-	ld b, $0
-	ld c, $0
-.asm_170c6f
-	ld hl, wPartyMon1HP
-	ld a, b
-	push bc
-	call GetPartyLocation
-	pop bc
-	ld a, [hli]
-	or [hl]
-	jr nz, .asm_170c7d
-	inc c
-
-.asm_170c7d
-	inc b
-	ld a, b
-	cp $3
-	jr c, .asm_170c6f
-	pop hl
-	ld a, [hl]
-	add c
-	ld [hl], a
-	call CloseSRAM
-	ret
-
 Function170c8b:
 	ld hl, wLastEnemyCounterMove
 	ld b, $5
@@ -287,14 +185,8 @@ Function170d02:
 	ret
 
 PichuAnimatedMobileGFX:
-INCBIN "gfx/mobile/pichu_animated.2bpp.lz"
-
 ElectroBallMobileGFX:
-INCBIN "gfx/mobile/electro_ball.2bpp.lz"
-
 PichuBorderMobileGFX:
-INCBIN "gfx/mobile/pichu_border.2bpp"
-
 Function1719c8:
 	ldh a, [hInMenu]
 	push af
@@ -747,29 +639,13 @@ Function171d2b:
 	ret
 
 MobilePasswordPalettes:
-INCLUDE "gfx/mobile/mobile_password.pal"
-
 AsciiFontGFX:
-INCBIN "gfx/mobile/ascii_font.2bpp"
-
 PasswordTopTilemap:
-INCBIN "gfx/mobile/password_top.tilemap"
-
 PasswordBottomTilemap:
-INCBIN "gfx/mobile/password_bottom.tilemap"
-
 PasswordShiftTilemap:
-INCBIN "gfx/mobile/password_shift.tilemap"
-
 ChooseMobileCenterTilemap:
-INCBIN "gfx/mobile/mobile_center.tilemap"
-
 MobilePasswordAttrmap:
-INCBIN "gfx/mobile/password.attrmap"
-
 ChooseMobileCenterAttrmap:
-INCBIN "gfx/mobile/mobile_center.attrmap"
-
 PasswordSlowpokeLZ:
 INCBIN "gfx/pokedex/slowpoke.2bpp.lz"
 
@@ -863,16 +739,5 @@ Palette_172edf:
 	RGB  0,  0,  0
 
 Stadium2N64GFX:
-INCBIN "gfx/mobile/stadium2_n64.2bpp"
-
 Stadium2N64Tilemap:
-if DEF(_CRYSTAL11)
-; BUG: Crystal 1.1 corrupted this tilemap by treating $0a bytes as
-; Unix newlines, and converting them to $0d $0a Windows newlines.
-INCBIN "gfx/mobile/stadium2_n64_corrupt.tilemap"
-else
-INCBIN "gfx/mobile/stadium2_n64.tilemap"
-endc
-
 Stadium2N64Attrmap:
-INCBIN "gfx/mobile/stadium2_n64.attrmap"

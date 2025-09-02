@@ -22,6 +22,7 @@ args = parser.parse_args()
 should_print_bank = False
 rombank_line = ''
 total_unused = 0
+total_banks = 0
 for line in args.mapfile:
 	line = line.strip()
 	if line.startswith('ROM'):
@@ -32,5 +33,9 @@ for line in args.mapfile:
 		print(line)
 		number = int(line.split(' ')[2].replace('$', '0x'), 0)
 		total_unused += number
+		total_banks += 1
 		should_print_bank = False
+while total_banks < 128:
+	total_unused += 0x4000
+	total_banks += 1
 print(f'Total unused space: {total_unused} ({total_unused:x}) byte(s)')

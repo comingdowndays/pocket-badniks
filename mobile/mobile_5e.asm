@@ -1,22 +1,9 @@
 MobileCardGFX::
-INCBIN "gfx/mobile/card.2bpp"
-
 ChrisSilhouetteGFX::
-INCBIN "gfx/mobile/chris_silhouette.2bpp"
-
 KrisSilhouetteGFX::
-INCBIN "gfx/mobile/kris_silhouette.2bpp"
-
 MobileCard2GFX::
-INCBIN "gfx/mobile/card_2.2bpp"
-
 CardLargeSpriteAndFolderGFX::
-INCBIN "gfx/mobile/card_large_sprite.2bpp"
-INCBIN "gfx/mobile/card_folder.2bpp"
-
 CardSpriteGFX::
-INCBIN "gfx/mobile/card_sprite.2bpp"
-
 Function17a68f::
 	call Function17a6a8
 	call Function17a751
@@ -184,12 +171,6 @@ Function17a78f:
 
 .asm_17a79f
 	farcall HDMATransferTilemapAndAttrmap_Overworld
-	ret
-
-Function17a7a6: ; unreferenced
-	ld a, [$d087]
-	inc a
-	ld [$d087], a
 	ret
 
 Function17a7ae:
@@ -922,20 +903,11 @@ Palette_17ac95:
 	RGB 31, 31,  0
 
 DialpadTilemap:
-INCBIN "gfx/mobile/dialpad.tilemap"
-
 DialpadAttrmap:
-INCBIN "gfx/mobile/dialpad.attrmap"
-
 DialpadGFX:
-INCBIN "gfx/mobile/dialpad.2bpp"
-
 DialpadCursorGFX:
-INCBIN "gfx/mobile/dialpad_cursor.2bpp"
-
 Palette_17b4b5:
 	RGB  2,  6, 10
 	RGB 24, 30, 29
 
 MobileCardListGFX::
-INCBIN "gfx/mobile/card_list.2bpp"

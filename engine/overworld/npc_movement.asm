@@ -274,7 +274,7 @@ WillObjectBumpIntoSomeoneElse:
 	ld e, [hl]
 	jr IsNPCAtCoord
 
-IsObjectFacingSomeoneElse: ; unreferenced
+IsObjectFacingSomeoneElse: ; could be useful
 	ldh a, [hMapObjectIndex]
 	call GetObjectStruct
 	call .GetFacingCoords
@@ -473,7 +473,7 @@ IsObjectMovingOffEdgeOfScreen:
 	scf
 	ret
 
-IsNPCAtPlayerCoord: ; unreferenced
+IsNPCAtPlayerCoord: ; could be useful
 	ld a, [wPlayerMapX]
 	ld d, a
 	ld a, [wPlayerMapY]

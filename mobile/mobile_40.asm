@@ -430,10 +430,6 @@ Function100320:
 	farcall Mobile_HDMATransferTilemapAndAttrmap_Overworld
 	ret
 
-Function100327: ; unreferenced
-	farcall HDMATransferTilemapToWRAMBank3
-	ret
-
 Function10032e:
 	call Function10034d
 	ld e, a
@@ -519,14 +515,6 @@ Function100393:
 Function10039c:
 	ld hl, wcc60
 	ld de, w3_d000
-	ld bc, $54
-	ld a, $03
-	call FarCopyWRAM
-	ret
-
-Function1003ab: ; unreferenced
-	ld hl, w3_d000
-	ld de, wcc60
 	ld bc, $54
 	ld a, $03
 	call FarCopyWRAM
@@ -2250,11 +2238,6 @@ Function100ef4:
 	ld c, 1
 	jr Function100f02
 
-Function100efb: ; unreferenced
-	ld hl, Unknown_10102c
-	ld c, 1
-	jr Function100f02
-
 Function100f02:
 	ld a, c
 	ld [wStringBuffer2], a
@@ -2950,28 +2933,6 @@ Function1013dd:
 	call CGBOnly_CopyTilemapAtOnce
 	ret
 
-Function1013e1: ; unreferenced
-	push de
-	inc de
-	ld b, a
-	ld c, 0
-.asm_1013e6
-	inc c
-	ld a, [hli]
-	ld [de], a
-	inc de
-	and a
-	jr z, .asm_1013f1
-	dec b
-	jr nz, .asm_1013e6
-	scf
-
-.asm_1013f1
-	pop de
-	ld a, c
-	ld [de], a
-	ret
-
 Function1013f5:
 	ld a, [hli]
 	ld [de], a
@@ -2984,13 +2945,6 @@ Function1013f5:
 	dec c
 	jr nz, .asm_1013f9
 	ret
-
-Function101400: ; unreferenced
-	ld a, [de]
-	inc de
-	cp [hl]
-	jr nz, asm_101416
-	inc hl
 
 Function101406:
 	ld c, a
@@ -3154,14 +3108,6 @@ Function101507:
 	ld hl, $40
 	ld bc, $40
 	ld a, MOBILEAPI_01
-	call MobileAPI
-	ld a, [wMobileCommsJumptableIndex]
-	inc a
-	ld [wMobileCommsJumptableIndex], a
-	ret
-
-Function10151d: ; unreferenced
-	ld a, MOBILEAPI_1A
 	call MobileAPI
 	ld a, [wMobileCommsJumptableIndex]
 	inc a
@@ -3335,12 +3281,6 @@ Function101663:
 	ld a, BANK(w5_dc00)
 	ld de, w5_dc00
 	call MobileCopyTransferData2
-	ret
-
-Function101674: ; unreferenced
-	ld a, BANK(w5_dc00)
-	ld hl, w5_dc00
-	call MobileCopyTransferData
 	ret
 
 Function10167d:
@@ -4173,11 +4113,6 @@ Function101cbc:
 	ld [wcd2b], a
 	ret
 
-Function101cc2: ; unreferenced
-	ld a, $02
-	ld [wcd2b], a
-	ret
-
 Function101cc8:
 	ld a, $01
 	ld [wc314], a
@@ -4432,20 +4367,6 @@ Function101e64:
 	set 5, [hl]
 	ld a, $02
 	ld [wcd2b], a
-	ret
-
-Function101e82: ; unreferenced
-	call Function101ecc
-	ld a, [wMobileCommsJumptableIndex]
-	inc a
-	ld [wMobileCommsJumptableIndex], a
-	ret
-
-Function101e8d: ; unreferenced
-	call Function101ed3
-	ld a, [wMobileCommsJumptableIndex]
-	inc a
-	ld [wMobileCommsJumptableIndex], a
 	ret
 
 Function101e98:
@@ -4839,10 +4760,6 @@ Function1021e0:
 	call ExitMenu
 	ret
 
-StartingLinkText: ; unreferenced
-	text_far _StartingLinkText
-	text_end
-
 LinkTerminatedText:
 	text_far _LinkTerminatedText
 	text_end
@@ -5196,28 +5113,9 @@ Function10246a:
 	ld [wcd49], a
 	ret
 
-Function102480: ; unreferenced
-	ld c, $32
-	call DelayFrames
-	ld a, [wcd49]
-	inc a
-	ld [wcd49], a
-	ret
-
 Function10248d:
 	ld a, [wcd49]
 	set 7, a
-	ld [wcd49], a
-	ret
-
-Function102496: ; unreferenced
-	ld hl, wcd4e
-	dec [hl]
-	ret nz
-	ld a, 0
-	ld [wcd4a], a
-	ld a, [wcd49]
-	inc a
 	ld [wcd49], a
 	ret
 
@@ -6150,13 +6048,6 @@ Function102b4e:
 	ld [w2DMenuNumRows], a
 	ret
 
-Function102b68: ; unreferenced
-	xor a
-	ld hl, wWindowStackPointer
-	ld bc, $10
-	call ByteFill
-	ret
-
 MenuData_102b73:
 	db 9, 6 ; cursor start y, x
 	db -1, 1 ; rows, columns
@@ -6918,11 +6809,7 @@ Unknown_10327a:
 	db $00, $00, $01, $03
 
 MobileTradeLightsGFX:
-INCBIN "gfx/mobile/mobile_trade_lights.2bpp"
-
 MobileTradeLightsPalettes:
-INCLUDE "gfx/mobile/mobile_trade_lights.pal"
-
 Function103302:
 	call Function103309
 	call Function103362

@@ -247,7 +247,6 @@ INCLUDE "engine/gfx/load_pics.asm"
 INCLUDE "engine/pokemon/move_mon_wo_mail.asm"
 INCLUDE "data/pokemon/base_stats.asm"
 INCLUDE "data/pokemon/names.asm"
-INCLUDE "data/pokemon/unused_pic_banks.asm"
 
 
 SECTION "Crystal Phone Text", ROMX
@@ -509,7 +508,6 @@ INCLUDE "mobile/mobile_42.asm"
 
 SECTION "Title", ROMX
 
-INCLUDE "engine/movie/unused_title.asm"
 INCLUDE "engine/movie/title.asm"
 
 
@@ -673,8 +671,6 @@ INCLUDE "data/battle_tower/unknown.asm"
 
 
 SECTION "Mobile News Data", ROMX
-
-INCLUDE "mobile/news/news.asm"
 
 
 SECTION "Crystal Events", ROMX
