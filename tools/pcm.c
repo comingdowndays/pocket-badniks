@@ -72,14 +72,14 @@ uint8_t *wav2pcm(uint8_t *wavdata, long wavsize, size_t *pcmsize) {
 	float loudest_sample = 0.0;
 	// Calculate loudest sample for normalizng audio
 	for (long i = 0; i < wavsize; i++) {
-		if (wavdata[wavsize] > loudest_sample) {
-			loudest_sample = wavdata[wavsize];
+		if (wavdata[i] > loudest_sample) {
+			loudest_sample = wavdata[i];
 		}
 	}
 
-	uint8_t sample_threshold_1 = loudest_sample / 4.0;
-	uint8_t sample_threshold_2 = loudest_sample / 4.0 * 2.0;
-	uint8_t sample_threshold_3 = loudest_sample / 4.0 * 3.0;
+	float sample_threshold_1 = loudest_sample / 4.0;
+	float sample_threshold_2 = (loudest_sample / 4.0) * 2.0;
+	float sample_threshold_3 = (loudest_sample / 4.0) * 3.0;
 
 	// Pack 4 WAV samples per PCM byte, clamping each from 0 to 3
 	*pcmsize = (size_t)((num_samples + 7) / 4);
@@ -88,11 +88,11 @@ uint8_t *wav2pcm(uint8_t *wavdata, long wavsize, size_t *pcmsize) {
 		uint8_t v = 0;
 		for (int64_t j = 0; j < 4 && i + j < num_samples; j++) {
 			uint8_t sample = wavdata[sample_offset + i + j];
-			if (sample < sample_threshold_1) {
+			if ((float)sample < sample_threshold_1) {
 				sample = 0;
-			} else if (sample < sample_threshold_2) {
+			} else if ((float)sample < sample_threshold_2) {
 				sample = 1;
-			} else if (sample < sample_threshold_3) {
+			} else if ((float)sample < sample_threshold_3) {
 				sample = 2;
 			} else {
 				sample = 3;

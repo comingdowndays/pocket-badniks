@@ -22,5 +22,4 @@ ENDM
 SECTION "PCM Data 1", ROMX
 
 JirachiCry1::
-	;pcm INCBIN "audio/pcm/jiracry1.pcm"
 	pcm INCBIN "audio/pcm/snd_splat.pcm"
