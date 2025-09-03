@@ -2205,7 +2205,7 @@ GetMapMusic::
 	jr z, .mahoganymart
 	bit RADIO_TOWER_MUSIC_F, c
 	jr nz, .radiotower
-	farcall Function8b342
+	call Function8b342
 	ld e, c
 	ld d, 0
 .done
@@ -2238,6 +2238,40 @@ GetMapMusic::
 .clearedmahogany
 	ld de, MUSIC_CHERRYGROVE_CITY
 	jr .done
+
+Function8b342::
+; Loads the map data pointer, then runs through a
+; dw with three dummy functions. Spends a lot of energy
+; doing pretty much nothing.
+	call GetMapAttributesPointer
+	ld d, h
+	ld e, l
+
+; Everything between here and "ret" is useless.
+	xor a
+.loop
+	push af
+	ld hl, .dw
+	rst JumpTable
+	pop af
+	inc a
+	cp 3
+	jr nz, .loop
+	ret
+
+.dw
+	dw .zero
+	dw .one
+	dw .two
+
+.zero
+	ret
+
+.one
+	ret
+
+.two
+	ret
 
 GetMapTimeOfDay::
 	call GetPhoneServiceTimeOfDayByte

@@ -7,14 +7,8 @@ ENDM
 SECTION "Tileset Data 1", ROMX
 
 TilesetKantoGFX::
-INCBIN "gfx/tilesets/kanto.2bpp.lz"
-
 TilesetKantoMeta::
-INCBIN "data/tilesets/kanto_metatiles.bin"
-
 TilesetKantoColl::
-INCLUDE "data/tilesets/kanto_collision.asm"
-
 Tileset0GFX::
 TilesetJohtoGFX::
 INCBIN "gfx/tilesets/johto.2bpp.lz"
@@ -187,12 +181,6 @@ INCLUDE "data/tilesets/underground_collision.asm"
 
 TilesetDarkCaveGFX::
 INCBIN "gfx/tilesets/dark_cave.2bpp.lz"
-
-UnusedTilesetJohtoMeta:: ; unreferenced
-INCBIN "data/tilesets/unused_johto_metatiles.bin"
-
-UnusedTilesetJohtoColl:: ; unreferenced
-INCLUDE "data/tilesets/unused_johto_collision.asm"
 
 
 SECTION "Tileset Data 5", ROMX

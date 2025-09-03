@@ -1,6 +1,6 @@
 ; Functions relating to the timer interrupt and the real-time-clock.
 
-Timer:: ; unreferenced
+Timer:: ; could be useful
 	push af
 	ldh a, [hMobile]
 	and a
@@ -256,7 +256,7 @@ SetClock::
 	call CloseSRAM ; unlatch clock, disable clock r/w
 	ret
 
-ClearRTCStatus:: ; unreferenced
+ClearRTCStatus:: ; could be useful
 ; clear sRTCStatusFlags
 	xor a
 	push af

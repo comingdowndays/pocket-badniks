@@ -21,8 +21,6 @@
 	const MAINMENUITEM_DEBUG_ROOM     ; 6
 
 MobileMenuGFX:
-INCBIN "gfx/mobile/mobile_menu.2bpp"
-
 MainMenu:
 .loop
 	xor a
@@ -81,8 +79,8 @@ endc
 	dw MainMenu_NewGame
 	dw MainMenu_Option
 	dw MainMenu_MysteryGift
-	dw MainMenu_Mobile
-	dw MainMenu_MobileStudium
+	dw MainMenu_Option
+	dw MainMenu_Option
 if DEF(_DEBUG)
 	dw MainMenu_DebugRoom
 endc

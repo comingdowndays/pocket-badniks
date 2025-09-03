@@ -502,8 +502,6 @@ PokeBallEffect:
 	cp BATTLETYPE_TUTORIAL
 	jp z, .FinishTutorial
 
-	farcall StubbedTrainerRankings_WildMonsCaught
-
 	ld hl, Text_GotchaMonWasCaught
 	call PrintText
 
@@ -1057,14 +1055,6 @@ LevelBallMultiplier:
 	ret
 
 ; BallDodgedText and BallMissedText were used in Gen 1.
-
-BallDodgedText: ; unreferenced
-	text_far _BallDodgedText
-	text_end
-
-BallMissedText: ; unreferenced
-	text_far _BallMissedText
-	text_end
 
 BallBrokeFreeText:
 	text_far _BallBrokeFreeText
@@ -1889,14 +1879,14 @@ LoadCurHPIntoBuffer3:
 	ld [wHPBuffer3], a
 	ret
 
-LoadHPIntoBuffer3: ; unreferenced
+LoadHPIntoBuffer3: ; could be useful
 	ld a, d
 	ld [wHPBuffer3 + 1], a
 	ld a, e
 	ld [wHPBuffer3], a
 	ret
 
-LoadHPFromBuffer3: ; unreferenced
+LoadHPFromBuffer3: ; could be useful
 	ld a, [wHPBuffer3 + 1]
 	ld d, a
 	ld a, [wHPBuffer3]
@@ -2703,14 +2693,6 @@ BallBoxFullText:
 
 ItemUsedText:
 	text_far _ItemUsedText
-	text_end
-
-ItemGotOnText: ; unreferenced
-	text_far _ItemGotOnText
-	text_end
-
-ItemGotOffText: ; unreferenced
-	text_far _ItemGotOffText
 	text_end
 
 ApplyPPUp:

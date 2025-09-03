@@ -203,7 +203,7 @@ FacingPlayerDistance::
 	and a
 	ret
 
-CheckTrainerFlag:: ; unreferenced
+CheckTrainerFlag:: ; could be useful
 	push bc
 	ld hl, OBJECT_MAP_OBJECT_INDEX
 	add hl, bc

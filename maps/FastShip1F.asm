@@ -187,11 +187,11 @@ FastShip1F_PlayerHitByGrandpaMovement:
 	turn_head LEFT
 	step_end
 
-FastShip1F_StepUpMovement: ; unreferenced
+FastShip1F_StepUpMovement: ; could be useful
 	step UP
 	step_end
 
-FastShip1F_StepDownMovement: ; unreferenced
+FastShip1F_StepDownMovement: ; could be useful
 	step DOWN
 	step_end
 

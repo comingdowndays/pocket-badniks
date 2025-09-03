@@ -196,7 +196,7 @@ DisplayHourOClock:
 	pop hl
 	ret
 
-DisplayHoursMinutesWithMinString: ; unreferenced
+DisplayHoursMinutesWithMinString: ; could be useful
 	ld h, d
 	ld l, e
 	push hl

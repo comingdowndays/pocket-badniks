@@ -228,7 +228,7 @@ ScriptCommandTable:
 	dw Script_halloffame                 ; a1
 	dw Script_credits                    ; a2
 	dw Script_warpfacing                 ; a3
-	dw Script_battletowertext            ; a4
+	dw Script_end			             ; a4
 	dw Script_getlandmarkname            ; a5
 	dw Script_gettrainerclassname        ; a6
 	dw Script_getname                    ; a7
@@ -442,13 +442,6 @@ Script__2dmenu:
 	xor a
 .ok
 	ld [wScriptVar], a
-	ret
-
-Script_battletowertext:
-	call SetUpTextbox
-	call GetScriptByte
-	ld c, a
-	farcall BattleTowerText
 	ret
 
 Script_verbosegiveitem:
@@ -2202,9 +2195,6 @@ Script_writeunusedbyte:
 	ld [wUnusedScriptByte], a
 	ret
 
-UnusedClosetextScript: ; unreferenced
-	closetext
-
 Script_closetext:
 	call HDMATransferTilemapAndAttrmap_Menu
 	call CloseText
@@ -2317,8 +2307,6 @@ Script_endall:
 Script_halloffame:
 	ld hl, wGameTimerPaused
 	res GAME_TIMER_COUNTING_F, [hl]
-	farcall StubbedTrainerRankings_HallOfFame
-	farcall StubbedTrainerRankings_HallOfFame2
 	farcall HallOfFame
 	ld hl, wGameTimerPaused
 	set GAME_TIMER_COUNTING_F, [hl]

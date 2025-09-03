@@ -261,7 +261,7 @@ StopAutoInput::
 	ld [wInputType], a
 	ret
 
-JoyTitleScreenInput:: ; unreferenced
+JoyTitleScreenInput:: ; could be useful
 .loop
 	call DelayFrame
 

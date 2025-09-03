@@ -4325,14 +4325,14 @@ BattleAnim_Cosine_e:
 	ld e, a
 	ret
 
-BattleAnim_AbsSinePrecise: ; unreferenced
+BattleAnim_AbsSinePrecise: ; could be useful
 	ld a, e
 	call BattleAnim_Sine
 	ld e, l
 	ld d, h
 	ret
 
-BattleAnim_AbsCosinePrecise: ; unreferenced
+BattleAnim_AbsCosinePrecise: ; could be useful
 	ld a, e
 	call BattleAnim_Cosine
 	ld e, l

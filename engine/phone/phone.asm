@@ -439,19 +439,9 @@ Script_SpecialBillCall::
 	ld e, PHONE_BILL
 	jp LoadCallerScript
 
-Script_SpecialElmCall: ; unreferenced
-	callasm .LoadElmScript
-	pause 30
-	sjump Script_ReceivePhoneCall
-
-.LoadElmScript:
-	ld e, PHONE_ELM
-	jp LoadCallerScript
-
 RingTwice_StartCall:
 	call .Ring
 	call .Ring
-	farcall StubbedTrainerRankings_PhoneCalls
 	ret
 
 .Ring:
@@ -479,7 +469,6 @@ PhoneCall::
 	ld [wPhoneCaller + 1], a
 	call .Ring
 	call .Ring
-	farcall StubbedTrainerRankings_PhoneCalls
 	ret
 
 .Ring:
@@ -529,11 +518,6 @@ Phone_CallEnd:
 	call HangUp_Wait20Frames
 	call HangUp_BoopOff
 	call HangUp_Wait20Frames
-	ret
-
-HangUp_ShutDown: ; unreferenced
-	ld de, SFX_SHUT_DOWN_PC
-	call PlaySFX
 	ret
 
 HangUp_Beep:

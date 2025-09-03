@@ -33,7 +33,7 @@ HandleCmdQueue::
 	jr nz, .loop
 	ret
 
-GetNthCmdQueueEntry: ; unreferenced
+GetNthCmdQueueEntry: ; could be useful
 	ld hl, wCmdQueue
 	ld bc, CMDQUEUE_ENTRY_SIZE
 	call AddNTimes
