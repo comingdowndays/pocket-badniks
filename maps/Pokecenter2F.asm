@@ -284,10 +284,6 @@ Script_LeftCableTradeCenter:
 	end
 
 Script_LeftMobileTradeRoom:
-	special Function101220
-	scall Script_WalkOutOfMobileTradeRoom
-	setscene SCENE_POKECENTER2F_CHECK_MYSTERY_GIFT
-	setmapscene MOBILE_TRADE_ROOM, SCENE_MOBILETRADEROOM_INITIALIZE
 	end
 
 Script_WalkOutOfMobileTradeRoom:
@@ -304,10 +300,6 @@ Script_LeftCableColosseum:
 	end
 
 Script_LeftMobileBattleRoom:
-	special Function101220
-	scall Script_WalkOutOfMobileBattleRoom
-	setscene SCENE_POKECENTER2F_CHECK_MYSTERY_GIFT
-	setmapscene MOBILE_BATTLE_ROOM, SCENE_MOBILEBATTLEROOM_INITIALIZE
 	end
 
 Script_WalkOutOfMobileBattleRoom:

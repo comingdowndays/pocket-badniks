@@ -132,28 +132,28 @@ SpecialsPointers::
 	dba			UnusedDummySpecial
 	dba			UnusedDummySpecial
 	dba			UnusedDummySpecial
-	add_special BattleTowerBattle
-	add_special Function1704e1
-	add_special UnusedBattleTowerDummySpecial1
-	add_special LoadOpponentTrainerAndPokemonWithOTSprite
 	dba			UnusedDummySpecial
-	add_special CheckForBattleTowerRules
+	dba			UnusedDummySpecial
+	dba			UnusedDummySpecial
+	dba			UnusedDummySpecial
+	dba			UnusedDummySpecial
+	dba			UnusedDummySpecial
 	add_special GiveOddEgg
 	add_special Reset ; bank 0
-	add_special Function1011f1
-	add_special Function101220
+	dba			UnusedDummySpecial
+	dba			UnusedDummySpecial
 	dba			UnusedDummySpecial
 	dba			UnusedDummySpecial
 	add_special MoveTutor
 	add_special OmanyteChamber
-	add_special Function11c1ab
-	add_special BattleTowerAction
+	dba			UnusedDummySpecial
+	dba			UnusedDummySpecial
 	add_special DisplayUnownWords
 	dba			UnusedDummySpecial
 	dba			UnusedDummySpecial
 	dba			UnusedDummySpecial
-	add_special BattleTowerMobileError
-	add_special AskMobileOrCable
+	dba			UnusedDummySpecial
+	dba			UnusedDummySpecial
 	add_special HoOhChamber
 	dba			UnusedDummySpecial
 	add_special CelebiShrineEvent
@@ -166,15 +166,15 @@ SpecialsPointers::
 	add_special BeastsCheck
 	add_special MonCheck
 	add_special SetPlayerPalette
-	add_special UnusedBattleTowerDummySpecial2
 	dba			UnusedDummySpecial
 	dba			UnusedDummySpecial
-	add_special Function10383c
+	dba			UnusedDummySpecial
+	dba			UnusedDummySpecial
 	dba			UnusedDummySpecial
 	add_special RefreshSprites
 	dba			UnusedDummySpecial
 	dba			UnusedDummySpecial
-	add_special Function103780
+	dba			UnusedDummySpecial
 	dba			UnusedDummySpecial
 	add_special AskRememberPassword
 	add_special LoadMapPalettes

@@ -228,7 +228,7 @@ ScriptCommandTable:
 	dw Script_halloffame                 ; a1
 	dw Script_credits                    ; a2
 	dw Script_warpfacing                 ; a3
-	dw Script_battletowertext            ; a4
+	dw Script_end			             ; a4
 	dw Script_getlandmarkname            ; a5
 	dw Script_gettrainerclassname        ; a6
 	dw Script_getname                    ; a7
@@ -442,13 +442,6 @@ Script__2dmenu:
 	xor a
 .ok
 	ld [wScriptVar], a
-	ret
-
-Script_battletowertext:
-	call SetUpTextbox
-	call GetScriptByte
-	ld c, a
-	farcall BattleTowerText
 	ret
 
 Script_verbosegiveitem:

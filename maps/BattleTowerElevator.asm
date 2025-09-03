@@ -16,21 +16,6 @@ BattleTowerElevatorNoopScene:
 	end
 
 BattleTowerElevatorRideElevatorScript:
-	follow BATTLETOWERELEVATOR_RECEPTIONIST, PLAYER
-	applymovement BATTLETOWERELEVATOR_RECEPTIONIST, MovementData_BattleTowerElevatorReceptionistWalksIn
-	applymovement PLAYER, MovementData_BattleTowerElevatorPlayerWalksIn
-	setval BATTLETOWERACTION_0A
-	special BattleTowerAction
-	playsound SFX_ELEVATOR
-	earthquake 60
-	waitsfx
-	follow BATTLETOWERELEVATOR_RECEPTIONIST, PLAYER
-	applymovement BATTLETOWERELEVATOR_RECEPTIONIST, MovementData_BattleTowerElevatorExitElevator
-	stopfollow
-	warpsound
-	disappear BATTLETOWERELEVATOR_RECEPTIONIST
-	applymovement PLAYER, MovementData_BattleTowerElevatorExitElevator
-	warpcheck
 	end
 
 MovementData_BattleTowerElevatorReceptionistWalksIn:

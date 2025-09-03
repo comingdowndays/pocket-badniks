@@ -40,7 +40,7 @@ DoSpriteAnimFrame:
 	dw SpriteAnimFunc_FlyLeaf
 	dw SpriteAnimFunc_FlyTo
 	dw SpriteAnimFunc_GSIntroHoOhLugia
-	dw SpriteAnimFunc_EZChatCursor
+	dw SpriteAnimFunc_Null
 	dw SpriteAnimFunc_Null
 	dw SpriteAnimFunc_Null
 	dw SpriteAnimFunc_IntroSuicune
@@ -826,10 +826,6 @@ SpriteAnimFunc_IntroSuicuneAway:
 	ld a, [hl]
 	add 16
 	ld [hl], a
-	ret
-
-SpriteAnimFunc_EZChatCursor:
-	farcall AnimateEZChatCursor
 	ret
 
 SpriteAnimFunc_Celebi:

@@ -13,31 +13,8 @@ BattleTower1F_MapScripts:
 	def_callbacks
 
 BattleTower1FCheckStateScene:
-	setval BATTLETOWERACTION_CHECKSAVEFILEISYOURS
-	special BattleTowerAction
-	iffalse .SkipEverything
-	setval BATTLETOWERACTION_GET_CHALLENGE_STATE ; readmem sBattleTowerChallengeState
-	special BattleTowerAction
-	ifequal $0, .SkipEverything
-	ifequal $2, .LeftWithoutSaving
-	ifequal $3, .SkipEverything
-	ifequal $4, .SkipEverything
-	opentext
-	writetext Text_WeveBeenWaitingForYou
-	waitbutton
-	closetext
-	sdefer Script_ResumeBattleTowerChallenge
 	end
 
-.LeftWithoutSaving
-	sdefer BattleTower_LeftWithoutSaving
-	setval BATTLETOWERACTION_CHALLENGECANCELED
-	special BattleTowerAction
-	setval BATTLETOWERACTION_06
-	special BattleTowerAction
-.SkipEverything:
-	setscene SCENE_BATTLETOWER1F_NOOP
-	; fallthrough
 BattleTower1FNoopScene:
 	end
 
@@ -53,37 +30,10 @@ BattleTower1FRulesSign:
 	end
 
 Script_ResumeBattleTowerChallenge:
-	closetext
-	setval BATTLETOWERACTION_LOADLEVELGROUP ; load choice of level group
-	special BattleTowerAction
 Script_WalkToBattleTowerElevator:
-	musicfadeout MUSIC_NONE, 8
-	setmapscene BATTLE_TOWER_BATTLE_ROOM, SCENE_BATTLETOWERBATTLEROOM_ENTER
-	setmapscene BATTLE_TOWER_ELEVATOR, SCENE_BATTLETOWERELEVATOR_ENTER
-	setmapscene BATTLE_TOWER_HALLWAY, SCENE_BATTLETOWERHALLWAY_ENTER
-	follow BATTLETOWER1F_RECEPTIONIST, PLAYER
-	applymovement BATTLETOWER1F_RECEPTIONIST, MovementData_BattleTower1FWalkToElevator
-	setval BATTLETOWERACTION_0A
-	special BattleTowerAction
-	warpsound
-	disappear BATTLETOWER1F_RECEPTIONIST
-	stopfollow
-	applymovement PLAYER, MovementData_BattleTowerHallwayPlayerEntersBattleRoom
-	warpcheck
 	end
 
 Script_GivePlayerHisPrize:
-	setval BATTLETOWERACTION_1C
-	special BattleTowerAction
-	setval BATTLETOWERACTION_GIVEREWARD
-	special BattleTowerAction
-	ifequal POTION, Script_YourPackIsStuffedFull
-	getitemname STRING_BUFFER_4, USE_SCRIPT_VAR
-	giveitem ITEM_FROM_MEM, 5
-	writetext Text_PlayerGotFive
-	setval BATTLETOWERACTION_1D
-	special BattleTowerAction
-	closetext
 	end
 
 Script_YourPackIsStuffedFull:
@@ -99,7 +49,6 @@ Script_BattleTowerHopeToServeYouAgain:
 	end
 
 Script_MobileError:
-	special BattleTowerMobileError
 	closetext
 	end
 
