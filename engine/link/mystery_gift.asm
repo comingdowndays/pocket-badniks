@@ -100,9 +100,6 @@ endc
 	cp RESERVED_GAME_VERSION
 	jr z, .skip_append_save
 	call .SaveMysteryGiftTrainerName
-	farcall RestoreGSBallFlag
-	farcall StubbedTrainerRankings_MysteryGift
-	farcall BackupGSBallFlag
 .skip_append_save
 	ld a, [wMysteryGiftPartnerSentDeco]
 	and a

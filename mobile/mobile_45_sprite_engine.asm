@@ -335,34 +335,6 @@ Function11615a:
 	ld [wc3f3], a
 	ret
 
-Function11619d:
-	ld a, [wc30d]
-	and a
-	ret z
-	ld a, [wc319]
-	cp $2
-	jr c, .asm_1161b4
-	ld a, $a0
-	ld hl, wShadowOAM
-	ld bc, 25 * OBJ_SIZE
-	call ByteFill
-
-.asm_1161b4
-	call Function1161b8
-	ret
-
-Function1161b8:
-	jumptable .Jumptable, wc319
-
-.Jumptable:
-	dw Function1161d5
-	dw Function116294
-	dw Function1162cb
-	dw Function1162f2
-	dw Function1163c0
-	dw Function11636e
-	dw Function116441
-
 Function1161d5:
 	ldh a, [rWBK]
 	push af
@@ -471,48 +443,6 @@ Function1161d5:
 	ld a, [wc319]
 	inc a
 	ld [wc319], a
-	ret
-
-Function116294:
-	farcall Function170d02
-	ld a, [wc319]
-	inc a
-	ld [wc319], a
-	ldh a, [rWBK]
-	push af
-	ld a, $5
-	ldh [rWBK], a
-	ld hl, wBGPals1 palette 6
-	ld de, wc320
-	ld bc, 2 palettes
-	call CopyBytes
-	ld hl, PichuBorderMobileBGPalettes
-	ld de, wBGPals1 palette 7
-	ld bc, 1 palettes
-	call CopyBytes
-	call SetDefaultBGPAndOBP
-	pop af
-	ldh [rWBK], a
-	ld a, $30
-	ldh [hWY], a
-	ret
-
-Function1162cb:
-	farcall Function170cc6
-	ld a, [wc319]
-	inc a
-	ld [wc319], a
-	ldh a, [rWBK]
-	push af
-	ld a, $5
-	ldh [rWBK], a
-	ld hl, PichuBorderMobileOBPalettes
-	ld de, wOBPals1 palette 2
-	ld bc, 6 palettes
-	call CopyBytes
-	call SetDefaultBGPAndOBP
-	pop af
-	ldh [rWBK], a
 	ret
 
 Function1162f2:
@@ -693,22 +623,6 @@ Function1163c0:
 	ld [wMusicFadeID + 1], a
 
 .asm_116439
-	xor a
-	ld [wc319], a
-	ld [wc30d], a
-	ret
-
-Function116441:
-	farcall Function17d405
-	ld a, $90
-	ldh [hWY], a
-	farcall HDMATransferTilemapAndAttrmap_Overworld
-	ld a, $8
-	ld [wMusicFade], a
-	ld a, [wMapMusic]
-	ld [wMusicFadeID], a
-	xor a
-	ld [wMusicFadeID + 1], a
 	xor a
 	ld [wc319], a
 	ld [wc30d], a

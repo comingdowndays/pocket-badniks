@@ -41,8 +41,8 @@ DoSpriteAnimFrame:
 	dw SpriteAnimFunc_FlyTo
 	dw SpriteAnimFunc_GSIntroHoOhLugia
 	dw SpriteAnimFunc_EZChatCursor
-	dw SpriteAnimFunc_MobileTradeSentPulse
-	dw SpriteAnimFunc_MobileTradeOTPulse
+	dw SpriteAnimFunc_Null
+	dw SpriteAnimFunc_Null
 	dw SpriteAnimFunc_IntroSuicune
 	dw SpriteAnimFunc_IntroPichuWooper
 	dw SpriteAnimFunc_Celebi
@@ -737,14 +737,6 @@ SpriteAnimFunc_FlyTo:
 	ld hl, SPRITEANIMSTRUCT_XOFFSET
 	add hl, bc
 	ld [hl], a
-	ret
-
-SpriteAnimFunc_MobileTradeSentPulse:
-	farcall MobileTradeAnim_AnimateSentPulse
-	ret
-
-SpriteAnimFunc_MobileTradeOTPulse:
-	farcall MobileTradeAnim_AnimateOTPulse
 	ret
 
 SpriteAnimFunc_IntroSuicune:

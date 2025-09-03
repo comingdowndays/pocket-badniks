@@ -693,8 +693,6 @@ NamingScreen_AdvanceCursor_CheckEndOfString:
 	scf
 	ret
 
-INCLUDE "data/text/unused_dakutens.asm"
-
 NamingScreen_DeleteCharacter:
 	ld hl, wNamingScreenCurNameLength
 	ld a, [hl]

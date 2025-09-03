@@ -32,7 +32,7 @@ FarCopyBytesDouble_DoubleBankSwitch::
 	rst Bankswitch
 	ret
 
-SafeHDMATransfer: ; unreferenced
+SafeHDMATransfer: ; could be useful
 	dec c
 	ldh a, [hBGMapMode]
 	push af
@@ -108,10 +108,6 @@ LoadFontsBattleExtra::
 
 LoadFontsExtra::
 	farcall _LoadFontsExtra1
-	farcall _LoadFontsExtra2
-	ret
-
-LoadFontsExtra2: ; unreferenced
 	farcall _LoadFontsExtra2
 	ret
 

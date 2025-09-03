@@ -471,56 +471,6 @@ Function8939a:
 	call Function89381
 	ret
 
-Function893b3:
-	call DisableLCD
-	call ClearSprites
-	call LoadStandardFont
-	call LoadFontsExtra
-	call Function893ef
-	call Function8942b
-	call Function89455
-	call EnableLCD
-	ret
-
-Function893cc:
-	call DisableLCD
-	call ClearSprites
-	call LoadStandardFont
-	call LoadFontsExtra
-	call Function893ef
-	call Function89464
-	call EnableLCD
-	ret
-
-Function893e2:
-	call Function89b1e
-	call Function893b3
-	call Function8a5b6
-	call Function8949c
-	ret
-
-Function893ef:
-	ld de, vTiles0
-	ld hl, EZChatCursorGFX
-	ld bc, $20
-	ld a, BANK(EZChatCursorGFX)
-	call FarCopyBytes
-	ret
-
-EZChatCursorGFX:
-Function8942b:
-	ld de, vTiles0 tile $02
-	ld hl, CardLargeSpriteAndFolderGFX
-	ld bc, 8 tiles ; just the large card sprite
-	ld a, BANK(CardLargeSpriteAndFolderGFX)
-	call FarCopyBytes
-	ld de, vTiles0 tile $0a
-	ld hl, CardSpriteGFX
-	ld bc, 4 tiles
-	ld a, BANK(CardSpriteGFX)
-	call FarCopyBytes
-	ret
-
 Function89448:
 ; Clears the sprite array
 	push af
@@ -532,27 +482,6 @@ Function89448:
 	dec d
 	jr nz, .loop
 	pop af
-	ret
-
-Function89455:
-	ld hl, CardLargeSpriteAndFolderGFX
-	ld de, vTiles2 tile $0c
-	ld bc, (8 + 65) tiles ; large card sprite + folder
-	ld a, BANK(CardLargeSpriteAndFolderGFX)
-	call FarCopyBytes
-	ret
-
-Function89464:
-	ld hl, MobileCardGFX
-	ld de, vTiles2
-	ld bc, $20 tiles
-	ld a, BANK(MobileCardGFX)
-	call FarCopyBytes
-	ld hl, MobileCard2GFX
-	ld de, vTiles2 tile $20
-	ld bc, $17 tiles
-	ld a, BANK(MobileCard2GFX)
-	call FarCopyBytes
 	ret
 
 Function89481:
@@ -1140,22 +1069,6 @@ Function897d5:
 	pop bc
 	ret
 
-Function89807:
-	ld hl, ChrisSilhouetteGFX
-	ld a, [wPlayerGender]
-	bit PLAYERGENDER_FEMALE_F, a
-	jr z, .asm_89814
-	ld hl, KrisSilhouetteGFX
-.asm_89814
-	call DisableLCD
-	ld de, vTiles2 tile $37
-	ld bc, (5 * 7) tiles
-	ld a, BANK(ChrisSilhouetteGFX) ; aka BANK(KrisSilhouetteGFX)
-	call FarCopyBytes
-	call EnableLCD
-	call DelayFrame
-	ret
-
 Function89829:
 	push bc
 	ld bc, $705
@@ -1648,15 +1561,6 @@ Function89b1e:
 	call Function89b00
 	ret
 
-Function89b28:
-	call Function891de
-	call ClearBGPalettes
-	call Function893e2
-	call Call_ExitMenu
-	call Function891ab
-	call SetDefaultBGPAndOBP
-	ret
-
 Function89b3b:
 	call Mobile22_SetBGMapMode0
 	farcall Function48cda
@@ -2099,47 +2003,6 @@ Function89dab:
 	and a
 	ret
 
-Function89de0:
-	call ClearSprites
-	call Function89e0a
-	jr c, .asm_89e00
-	ld c, $1
-.asm_89dea
-	call Function8a31c
-	jr z, .asm_89dfd
-	ld a, [wMenuCursorY]
-	ld c, a
-	push bc
-	ld hl, Jumptable_89e04
-	ld a, e
-	dec a
-	rst JumpTable
-	pop bc
-	jr .asm_89dea
-.asm_89dfd
-	call Function891fe
-.asm_89e00
-	call Function8917a
-	ret
-
-Jumptable_89e04:
-	dw Function8a62c
-	dw Function8a999
-	dw Function8ab93
-
-Function89e0a:
-	call OpenSRAMBank4
-	call Function8b3b0
-	call CloseSRAM
-	ld hl, Jumptable_89e18
-	rst JumpTable
-	ret
-
-Jumptable_89e18:
-	dw Function89e1e
-	dw Function8a116
-	dw Function8a2aa
-
 Function89e1e:
 	call OpenSRAMBank4
 	ld bc, $a037
@@ -2148,64 +2011,11 @@ Function89e1e:
 	xor a
 	ld [wd02d], a
 
-asm_89e2e:
-	ld a, [wd02d]
-	ld hl, Jumptable_89e3c
-	rst JumpTable
-	ret
-
-Function89e36:
-	ld hl, wd02d
-	inc [hl]
-	jr asm_89e2e
-
-Jumptable_89e3c:
-	dw Function89e6f
-	dw Function89fed
-	dw Function89ff6
-	dw Function8a03d
-	dw Function89eb9
-	dw Function89efd
-	dw Function89fce
-	dw Function8a04c
-	dw Function8a055
-	dw Function8a0e6
-	dw Function8a0ec
-	dw Function8a0f5
-	dw Function89e58
-	dw Function89e68
-
-Function89e58:
-	ld a, $1
-	call Function8a2fe
-	call Function891fe
-	call Function893e2
-	call Function89168
-	and a
-	ret
-
 Function89e68:
 	call Function891fe
 	ld a, $1
 	scf
 	ret
-
-Function89e6f:
-	call Function891de
-	call Function89245
-	call Function89ee1
-	call Function89e9a
-	hlcoord 7, 4
-	call Function8a58d
-	ld a, $5
-	hlcoord 7, 4, wAttrmap
-	call Function8a5a3
-	ld a, $6
-	hlcoord 10, 4, wAttrmap
-	call Function8a5a3
-	call Function891ab
-	call SetDefaultBGPAndOBP
-	jp Function89e36
 
 Function89e9a:
 	ldh a, [rWBK]
@@ -2225,106 +2035,6 @@ Palette_89eb1:
 	RGB 31, 31, 31
 	RGB 27, 19, 00
 	RGB 00, 00, 00
-
-Function89eb9:
-	call Function891fe
-	call Function89ee1
-	call Function89e9a
-	hlcoord 7, 4
-	call Function8a58d
-	ld a, $5
-	hlcoord 7, 4, wAttrmap
-	call Function8a5a3
-	ld a, $6
-	hlcoord 10, 4, wAttrmap
-	call Function8a5a3
-	call Function891ab
-	call SetDefaultBGPAndOBP
-	jp Function89e36
-
-Function89ee1:
-	call ClearBGPalettes
-	call Function893e2
-	call Mobile22_SetBGMapMode0
-	farcall Function4a3a7
-	farcall MG_Mobile_Layout_CreatePalBoxes
-	hlcoord 1, 0
-	call Function8a53d
-	ret
-
-Function89efd:
-	ld hl, wd012
-	ld a, $ff
-	ld [hli], a
-	xor a
-rept 4
-	ld [hli], a
-endr
-	ld [hl], a
-.asm_89f09
-	ld hl, wd012
-	inc [hl]
-	ld a, [hli]
-	and $3
-	jr nz, .asm_89f2e
-	ld a, [hl]
-	cp $4
-	jr nc, .asm_89f2e
-	ld b, $32
-	inc [hl]
-	ld a, [hl]
-	dec a
-	jr z, .asm_89f26
-	ld c, a
-.asm_89f1f
-	ld a, $b
-	add b
-	ld b, a
-	dec c
-	jr nz, .asm_89f1f
-.asm_89f26
-	ld c, $e8
-	ld a, [wd013]
-	call Function89fa5
-.asm_89f2e
-	ld a, [wd013]
-	and a
-	jr z, .asm_89f58
-.asm_89f34
-	call Function89f6a
-	ld e, a
-	ld a, c
-	cp $a8
-	jr nc, .asm_89f4d
-	cp $46
-	jr c, .asm_89f4d
-	ld d, $0
-	dec e
-	ld hl, wd014
-	add hl, de
-	set 0, [hl]
-	inc e
-	jr .asm_89f51
-.asm_89f4d
-	ld a, $2
-	add c
-	ld c, a
-.asm_89f51
-	ld a, e
-	call Function89f77
-	dec a
-	jr nz, .asm_89f34
-.asm_89f58
-	call DelayFrame
-	ld hl, wd014
-	ld c, $4
-.asm_89f60
-	ld a, [hli]
-	and a
-	jr z, .asm_89f09
-	dec c
-	jr nz, .asm_89f60
-	jp Function89e36
 
 Function89f6a:
 	push af
@@ -2410,101 +2120,6 @@ Function89fa5:
 	jr nz, .asm_89faf
 	ret
 
-Function89fce:
-	call Function8a5b6
-	ld a, $5
-	hlcoord 7, 4, wAttrmap
-	call Function8a5a3
-	ld a, $6
-	hlcoord 10, 4, wAttrmap
-	call Function8a5a3
-	call Function89448
-	call SetDefaultBGPAndOBP
-	call Function891ab
-	jp Function89e36
-
-Function89fed:
-	ld hl, MobileCardFolderIntro1Text
-	call PrintText
-	jp Function89e36
-
-Function89ff6:
-	call Function891fe
-	call ClearBGPalettes
-	call Function893cc
-	call Function89807
-	call Function89492
-	call Function894ca
-	call OpenSRAMBank4
-	ld hl, $a603
-	ld a, -1
-	ld bc, 8
-	call ByteFill
-	ld hl, $a603
-	ld de, wd008
-	call Function89381
-	call CloseSRAM
-	call Function8987f
-	call OpenSRAMBank4
-	hlcoord 1, 13
-	ld bc, $a007
-	call Function89a0c
-	call CloseSRAM
-	call Function891ab
-	call Mobile22_PromptButton
-	jp Function89e36
-
-Function8a03d:
-	ld hl, MobileCardFolderIntro2Text
-	call Mobile_EnableSpriteUpdates
-	call PrintText
-	call Mobile_DisableSpriteUpdates
-	jp Function89e36
-
-Function8a04c:
-	ld hl, MobileCardFolderIntro3Text
-	call PrintText
-	jp Function89e36
-
-Function8a055:
-	ld c, $7
-	ld b, $4
-.asm_8a059
-	call Function8a0a1
-	inc c
-	call Function8a0c9
-	push bc
-	call Function8a58d
-	pop bc
-	call Function8a0de
-	push bc
-	push hl
-	ld a, $5
-	call Function8a5a3
-	pop hl
-	inc hl
-	inc hl
-	inc hl
-	ld a, $6
-	call Function8a5a3
-	call CGBOnly_CopyTilemapAtOnce
-	pop bc
-	ld a, c
-	cp $b
-	jr nz, .asm_8a059
-	call Function8a0a1
-	hlcoord 12, 4
-	call Function8a58d
-	ld a, $5
-	hlcoord 12, 4, wAttrmap
-	call Function8a5a3
-	pop hl
-	ld a, $6
-	hlcoord 15, 4, wAttrmap
-	call Function8a5a3
-	call CGBOnly_CopyTilemapAtOnce
-	jp Function89e36
-
 Function8a0a1:
 	call Mobile22_SetBGMapMode0
 	push bc
@@ -2558,24 +2173,6 @@ Function8a0de:
 	add hl, de
 	ret
 
-Function8a0e6:
-	call Function8b539
-	jp Function89e36
-
-Function8a0ec:
-	ld hl, MobileCardFolderIntro4Text
-	call PrintText
-	jp Function89e36
-
-Function8a0f5:
-	call Function8b555
-	jp nc, Function8a0ff
-	ld hl, wd02d
-	inc [hl]
-
-Function8a0ff:
-	jp Function89e36
-
 MobileCardFolderIntro1Text:
 	text_far _MobileCardFolderIntro1Text
 	text_end
@@ -2591,52 +2188,6 @@ MobileCardFolderIntro3Text:
 MobileCardFolderIntro4Text:
 	text_far _MobileCardFolderIntro4Text
 	text_end
-
-Function8a116:
-	ld a, $1
-	ld [wd030], a
-	ld hl, MenuHeader_0x8a176
-	call LoadMenuHeader
-.asm_8a121
-	call Mobile22_SetBGMapMode0
-	call Function8a17b
-	jr c, .asm_8a16b
-	ld a, [wMenuCursorY]
-	ld [wd030], a
-	dec d
-	jr z, .asm_8a140
-	call Function8a20d
-	jr c, .asm_8a121
-	xor a
-	call Function8a2fe
-	call Function8916e
-	jr .asm_8a16b
-.asm_8a140
-	call Function89174
-	jr nz, .asm_8a14c
-	call Function8a241
-	jr c, .asm_8a121
-	jr .asm_8a15a
-.asm_8a14c
-	call WaitSFX
-	ld de, SFX_TWINKLE
-	call PlaySFX
-	ld c, $10
-	call DelayFrames
-.asm_8a15a
-	call ExitMenu
-	call Function891de
-	call Function893e2
-	call Function89245
-	call Function89168
-	and a
-	ret
-.asm_8a16b
-	call Mobile_EnableSpriteUpdates
-	call CloseWindow
-	call Mobile_DisableSpriteUpdates
-	scf
-	ret
 
 MenuHeader_0x8a176:
 	db MENU_BACKUP_TILES ; flags
@@ -2727,82 +2278,6 @@ MobileCardFolderDeleteAreYouSureText:
 MobileCardFolderDeletedText:
 	text_far _MobileCardFolderDeletedText
 	text_end
-
-Function8a241:
-	call LoadStandardMenuHeader
-	call Function891fe
-	call Function8a262
-	jr nc, .asm_8a254
-	call Function891fe
-	call Function89b28
-	scf
-	ret
-.asm_8a254
-	call Function891de
-	call ClearBGPalettes
-	call Call_ExitMenu
-	call Function891de
-	and a
-	ret
-
-Function8a262:
-	call ClearBGPalettes
-	call Function893e2
-	call Mobile22_SetBGMapMode0
-	farcall Function4a3a7
-	farcall MG_Mobile_Layout_CreatePalBoxes
-	hlcoord 1, 0
-	call Function8a53d
-	hlcoord 12, 4
-	call Function8a58d
-	ld a, $5
-	hlcoord 12, 4, wAttrmap
-	call Function8a5a3
-	ld a, $6
-	hlcoord 15, 4, wAttrmap
-	call Function8a5a3
-	xor a
-	ld [wd02e], a
-	ld bc, wd013
-	call Function8b36c
-	call Function8b493
-	call Function891ab
-	call SetDefaultBGPAndOBP
-	call Function8b5e7
-	ret
-
-Function8a2aa:
-	ld hl, MenuHeader_0x8a2ef
-	call LoadMenuHeader
-	ld hl, MobileCardFolderAskOpenOldText
-	call PrintText
-	ld a, $1
-	call Function89259
-	jr nc, .asm_8a2cf
-	ld hl, MobileCardFolderAskDeleteOldText
-	call PrintText
-	ld a, $2
-	call Function89259
-	jr c, .asm_8a2ea
-	call Function8a20d
-	jr .asm_8a2ea
-.asm_8a2cf
-	call ExitMenu
-	call Function8a241
-	jr c, .asm_8a2ed
-	ld a, $1
-	call Function8a313
-	call CloseSRAM
-	call Function891de
-	call Function89245
-	call Function89168
-	and a
-	ret
-.asm_8a2ea
-	call CloseWindow
-.asm_8a2ed
-	scf
-	ret
 
 MenuHeader_0x8a2ef:
 	db MENU_BACKUP_TILES ; flags
@@ -3235,79 +2710,6 @@ Palette_8a624:
 	RGB 31, 31, 31
 	RGB 00, 00, 00
 
-Function8a62c:
-	call LoadStandardMenuHeader
-	call Function891fe
-	xor a
-	call Function8b94a
-	call Function8b677
-.asm_8a639
-	xor a
-	ld [wd033], a
-	ld [wd032], a
-	ld [wd0e3], a
-	call Function8b7bd
-	ld a, c
-	and a
-	jr z, .asm_8a66a
-	ld [wMenuSelection], a
-	ld b, a
-	ld a, [wScrollingMenuCursorPosition]
-	inc a
-	ld [wd034], a
-	push bc
-	call Function8b960
-	ld a, c
-	pop bc
-	jr z, .asm_8a639
-	ld c, a
-	ld hl, Jumptable_8a671
-	ld a, b
-	ld [wMenuSelection], a
-	ld a, c
-	dec a
-	rst JumpTable
-	jr .asm_8a639
-.asm_8a66a
-	call Function891fe
-	call Function89b28
-	ret
-
-Jumptable_8a671:
-	dw Function8a679
-	dw Function8a6cd
-	dw Function8a8c3
-	dw Function8a930
-
-Function8a679:
-	call Function891de
-	call ClearBGPalettes
-	call Function893cc
-	call OpenSRAMBank4
-	call Function8931b
-	call Function89844
-	call CloseSRAM
-	call OpenSRAMBank4
-	call Function8939a
-	call Function89856
-	hlcoord 1, 13
-	call Function899fe
-	call Function891ab
-	call CloseSRAM
-.asm_8a6a3
-	call Function89a57
-	jr c, .asm_8a6a3
-	and a
-	jr z, Function8a679
-	ld hl, Jumptable_8a6bc
-	dec a
-	rst JumpTable
-	jr c, Function8a679
-	call Function891fe
-	call Function8b677
-	call Function89448
-	ret
-
 Jumptable_8a6bc:
 	dw Function8a6c0
 	dw Function8a6c5
@@ -3322,68 +2724,6 @@ Function8a6c5:
 	call Function89d0d
 	scf
 	ret
-
-Function8a6cd:
-	call Function891de
-	call ClearBGPalettes
-	call Function893cc
-	call OpenSRAMBank4
-	call Function8931b
-	call Function89844
-	call Function8a757
-	call CloseSRAM
-.asm_8a6e5
-	call OpenSRAMBank4
-	call Function8931b
-	call Function89856
-	call Function89a2e
-	call Function891ab
-	xor a
-	ld [wd02f], a
-	call CloseSRAM
-.asm_8a6fb
-	call Function89b97
-	call Function89c67
-	jr c, .asm_8a718
-	ld a, b
-	and a
-	jr z, .asm_8a6fb
-	call PlayClickSFX
-	call Function89448
-	ld a, [wd011]
-	ld hl, Jumptable_8a74f
-	rst JumpTable
-	jr nc, .asm_8a6e5
-	jr .asm_8a742
-.asm_8a718
-	call OpenSRAMBank4
-	call Function8a765
-	call CloseSRAM
-	jr nc, .asm_8a73f
-	call Mobile22_SetBGMapMode0
-	call Function89448
-	call Function89a23
-	hlcoord 1, 13
-	ld de, String_89135
-	call PlaceString
-	call WaitBGMap
-	ld a, $2
-	call Function89254
-	jr c, .asm_8a6e5
-.asm_8a73f
-	call CloseSRAM
-.asm_8a742
-	call ClearBGPalettes
-	call Function89448
-	call Function891d3
-	call Function8b677
-	ret
-
-Jumptable_8a74f:
-	dw Function8a78c
-	dw Function8a7cb
-	dw Function8a818
-	dw Function8a8a1
 
 Function8a757:
 	call Function8939a
@@ -3415,66 +2755,6 @@ Function8a765:
 	ret
 .asm_8a78a
 	scf
-	ret
-
-Function8a78c:
-	call Function891fe
-	ld de, wd002
-	ld b, NAME_FRIEND
-	farcall NamingScreen
-	call OpenSRAMBank4
-	call Function8931b
-	push bc
-	ld hl, $0
-	add hl, bc
-	ld d, h
-	ld e, l
-	ld hl, wd002
-	call InitName
-	call CloseSRAM
-	call DelayFrame
-	call JoyTextDelay
-	call Function891de
-	call ClearBGPalettes
-	call Function893cc
-	call OpenSRAMBank4
-	pop bc
-	call Function89844
-	call CloseSRAM
-	and a
-	ret
-
-Function8a7cb:
-	ld a, [wMenuSelection]
-	push af
-	call Function891de
-	ld de, wd008
-	ld c, $0
-	farcall Function17a68f
-	jr c, .asm_8a7f4
-	ld hl, wd008
-	ld a, $ff
-	ld bc, $8
-	call ByteFill
-	ld h, d
-	ld l, e
-	ld de, wd008
-	ld c, $8
-	call Function89193
-.asm_8a7f4
-	pop af
-	ld [wMenuSelection], a
-	call Function891de
-	call ClearBGPalettes
-	call Function893cc
-	call OpenSRAMBank4
-	call Function8931b
-	call Function89844
-	call Function89856
-	call Function89a2e
-	call Function891ab
-	call CloseSRAM
-	and a
 	ret
 
 Function8a818:
@@ -3554,39 +2834,6 @@ Function8a8a1:
 	and a
 	ret
 
-Function8a8c3:
-	call Function891de
-	call ClearBGPalettes
-	call Function893cc
-	call OpenSRAMBank4
-	call Function8931b
-	call Function89844
-	call Function8939a
-	call Function89856
-	call CloseSRAM
-	call Function891ab
-	hlcoord 1, 13
-	ld de, String_8a919
-	call PlaceString
-	ld a, $2
-	call Function89254
-	jr c, .asm_8a90f
-	call OpenSRAMBank4
-	call Function892b4
-	call CloseSRAM
-	call Function89a23
-	call Mobile22_SetBGMapMode0
-	hlcoord 1, 13
-	ld de, String_8a926
-	call PlaceString
-	call WaitBGMap
-	call JoyWaitAorB
-.asm_8a90f
-	call Function89448
-	call Function891fe
-	call Function8b677
-	ret
-
 String_8a919:
 	db "このデータ<WO>けしますか？@"
 
@@ -3648,35 +2895,6 @@ Function8a930:
 	call CloseSRAM
 	ret
 
-Function8a999:
-	ld hl, MenuHeader_0x8a9c9
-	call LoadMenuHeader
-	ld c, $1
-.asm_8a9a1
-	call Function8a9ce
-	jr c, .asm_8a9bb
-	push bc
-	push de
-	call LoadStandardMenuHeader
-	pop de
-	dec e
-	ld a, e
-	ld hl, Jumptable_8a9c5
-	rst JumpTable
-	call Function891fe
-	call Function89b28
-	pop bc
-	jr .asm_8a9a1
-.asm_8a9bb
-	call Mobile_EnableSpriteUpdates
-	call CloseWindow
-	call Mobile_DisableSpriteUpdates
-	ret
-
-Jumptable_8a9c5:
-	dw Function8aa0a
-	dw Function8ab3b
-
 MenuHeader_0x8a9c9:
 	db MENU_BACKUP_TILES ; flags
 	menu_coords 11, 4, 18, TEXTBOX_Y - 1
@@ -3718,87 +2936,6 @@ MenuData_0x8a9fa:
 	db "やめる@"
 
 Function8aa09:
-	ret
-
-Function8aa0a:
-	ld a, $1
-	ld [wd02f], a
-	ld [wd011], a
-	xor a
-	ld [wd010], a
-	ld [wd012], a
-	call OpenSRAMBank4
-	ld hl, $a603
-	ld de, wd008
-	call Function89381
-	call CloseSRAM
-	call Function891fe
-	call ClearBGPalettes
-	call Function893cc
-	call Function89807
-	call Function89492
-	call Function894ca
-.asm_8aa3a
-	call Function8987f
-	call Function89a2e
-	call Function891ab
-.asm_8aa43
-	call Function89b97
-	call Function89c67
-	jr c, .asm_8aa61
-	ld a, b
-	and a
-	jr z, .asm_8aa43
-	call PlayClickSFX
-	call Function89448
-	ld a, [wd011]
-	dec a
-	ld hl, Jumptable_8aa6d
-	rst JumpTable
-	jr nc, .asm_8aa3a
-	jr .asm_8aa69
-.asm_8aa61
-	call Function89448
-	call Function8ab11
-	jr nc, .asm_8aa3a
-.asm_8aa69
-	call Function89448
-	ret
-
-Jumptable_8aa6d:
-	dw Function8aa73
-	dw Function8aab6
-	dw Function8ab11
-
-Function8aa73:
-	ld a, [wMenuSelection]
-	ld e, a
-	push de
-	call Function891de
-	ld de, wd008
-	ld c, $0
-	farcall Function17a68f
-	jr c, .asm_8aa9d
-	ld hl, wd008
-	ld a, $ff
-	ld bc, $8
-	call ByteFill
-	ld h, d
-	ld l, e
-	ld de, wd008
-	ld c, $8
-	call Function89193
-.asm_8aa9d
-	call Function891fe
-	call ClearBGPalettes
-	call Function893cc
-	call Function89807
-	call Function89492
-	call Function894ca
-	pop de
-	ld a, e
-	ld [wMenuSelection], a
-	and a
 	ret
 
 Function8aab6:
@@ -3860,144 +2997,9 @@ Function8ab11:
 	and a
 	ret
 
-Function8ab3b:
-.pressed_start
-	call Function891fe
-	call ClearBGPalettes
-	call Function893cc
-	call Function89807
-	call Function89492
-	call Function894ca
-	call OpenSRAMBank4
-	ld hl, $a603
-	ld de, wd008
-	call Function89381
-	call CloseSRAM
-	call Function8987f
-	call OpenSRAMBank4
-	hlcoord 1, 13
-	ld bc, $a007
-	call Function89a0c
-	call CloseSRAM
-	call Function891ab
-	call .JoypadLoop
-	jr c, .pressed_start
-	ret
-
-.JoypadLoop:
-	call JoyTextDelay_ForcehJoyDown
-	bit B_PAD_A, c
-	jr nz, .a_b_button
-	bit B_PAD_B, c
-	jr nz, .a_b_button
-	bit B_PAD_START, c
-	jr z, .JoypadLoop
-	call PlayClickSFX
-	call Function89d0d
-	scf
-	ret
-
-.a_b_button
-	call PlayClickSFX
-	and a
-	ret
-
-Function8ab93:
-	call ClearBGPalettes
-	call LoadStandardMenuHeader
-	farcall DoNameCardSwap
-	call ClearSprites
-	call Function891fe
-	call Function89b28
-	ret
-
-Function8aba9:
-	ld a, $2
-	call Function8b94a
-	ld a, $1
-	ld [wd032], a
-.asm_8abb3
-	call Function891fe
-	call Function8b677
-.asm_8abb9
-	call Function8b7bd
-	jr z, .asm_8abdf
-	ld a, c
-	ld [wMenuSelection], a
-	call OpenSRAMBank4
-	call Function8931b
-	ld hl, $0011
-	add hl, bc
-	call Function89b45
-	call CloseSRAM
-	jr c, .asm_8abe2
-	ld de, SFX_WRONG
-	call WaitPlaySFX
-	call CloseSRAM
-	jr .asm_8abb9
-
-.asm_8abdf
-	xor a
-	ld c, a
-	ret
-
-.asm_8abe2
-	call PlayClickSFX
-.asm_8abe5
-	call Function891de
-	call ClearBGPalettes
-	call Function893cc
-	call OpenSRAMBank4
-	call Function8931b
-	call Function89844
-	call CloseSRAM
-	call OpenSRAMBank4
-	call Function8939a
-	call Function89856
-	hlcoord 1, 13
-	call Function899fe
-	call CloseSRAM
-	call Function891ab
-.asm_8ac0f
-	call Function89a57
-	jr c, .asm_8ac0f
-	and a
-	jr z, .asm_8abe5
-	cp $2
-	jr z, .asm_8ac0f
-	hlcoord 0, 12
-	ld b, $4
-	ld c, $12
-	call Textbox
-	hlcoord 1, 14
-	ld de, String_8ac3b
-	call PlaceString
-	ld a, $1
-	call Function8925e
-	jp c, .asm_8abb3
-	ld a, [wMenuSelection]
-	ld c, a
-	ret
-
 String_8ac3b:
 	db   "こ<NO>ともだち<NI>でんわを"
 	next "かけますか？@"
-
-Function8ac4e:
-	xor a
-	ld [wMenuSelection], a
-	push de
-	call Function891de
-	call ClearBGPalettes
-	call Function893cc
-	pop bc
-	call Function89844
-	call Function8939a
-	call Function89856
-	hlcoord 1, 13
-	call Function899fe
-	call Function891ab
-	ret
 
 Function8ac70:
 	push de
@@ -4008,148 +3010,9 @@ Function8ac76:
 	call Function891fe
 	call Function8b677
 
-Function8ac7c:
-	call Function8b7bd
-	jr z, .asm_8acf0
-	ld a, c
-	ld [wd02f], a
-	ld [wMenuSelection], a
-	call OpenSRAMBank4
-	call Function8931b
-	call Function8932d
-	call CloseSRAM
-	jr nc, .asm_8acb0
-	call OpenSRAMBank4
-	ld hl, $0011
-	add hl, bc
-	call Function89b45
-	call CloseSRAM
-	jr nc, .asm_8accc
-	call OpenSRAMBank4
-	call Function892b7
-	call CloseSRAM
-	jr .asm_8accc
-
-.asm_8acb0
-	call Function8ad0b
-	jr c, Function8ac76
-	and a
-	jr nz, .asm_8accc
-	call OpenSRAMBank4
-	ld h, b
-	ld l, c
-	ld d, $0
-	ld e, $6
-	add hl, de
-	ld d, h
-	ld e, l
-	pop hl
-	ld c, $1f
-	call Function89193
-	jr .asm_8ace4
-
-.asm_8accc
-	pop hl
-	call OpenSRAMBank4
-	ld d, b
-	ld e, c
-	ld c, $6
-	call Function89193
-	ld a, $6
-	add e
-	ld e, a
-	ld a, $0
-	adc d
-	ld d, a
-	ld c, $1f
-	call Function89193
-
-.asm_8ace4
-	call CloseSRAM
-	call LoadStandardFont
-	ld a, [wd02f]
-	ld c, a
-	and a
-	ret
-
-.asm_8acf0
-	ld hl, MobileCardFolderFinishRegisteringCardsText
-	call PrintText
-	ld a, $2
-	call Function89259
-	jp c, Function8ac7c
-	call LoadStandardFont
-	pop de
-	ld c, $0
-	scf
-	ret
-
 MobileCardFolderFinishRegisteringCardsText:
 	text_far _MobileCardFolderFinishRegisteringCardsText
 	text_end
-
-Function8ad0b:
-.asm_8ad0b
-	ld a, [wMenuSelection]
-	ld [wd02f], a
-	call Function891de
-	call ClearBGPalettes
-	call Function893cc
-	call OpenSRAMBank4
-	call Function8931b
-	push bc
-	call Function89844
-	call Function8939a
-	call Function89856
-	hlcoord 1, 13
-	call Function899fe
-	call CloseSRAM
-	call Function891ab
-	pop bc
-.asm_8ad37
-	push bc
-	call Function89a57
-	pop bc
-	jr c, .asm_8ad37
-	and a
-	jr z, .asm_8ad0b
-	cp $2
-	jr z, .asm_8ad37
-	call Mobile22_SetBGMapMode0
-	push bc
-	hlcoord 0, 12
-	ld b, $4
-	ld c, $12
-	call Textbox
-	ld de, String_8ad89
-	hlcoord 1, 14
-	call PlaceString
-	ld a, $2
-	call Function8925e
-	jr c, .asm_8ad87
-	call Mobile22_SetBGMapMode0
-	hlcoord 0, 12
-	ld b, $4
-	ld c, $12
-	call Textbox
-	ld de, String_8ad9c
-	hlcoord 1, 14
-	call PlaceString
-	ld a, $1
-	call Function8925e
-	jr c, .asm_8ad84
-	ld a, $0
-	jr .asm_8ad86
-
-.asm_8ad84
-	ld a, $1
-
-.asm_8ad86
-	and a
-
-.asm_8ad87
-	pop bc
-	ret
 
 String_8ad89:
 	db   "こ<NO>めいし<WO>けして"
@@ -4158,14 +3021,6 @@ String_8ad89:
 String_8ad9c:
 	db   "おともだち<NO>なまえを"
 	next "のこして　おきますか？@"
-
-Function8adb3:
-	call Function891de
-	call Function8a262
-	push af
-	call Function891de
-	pop af
-	ret
 
 Function8adcc:
 	call OpenSRAMBank4

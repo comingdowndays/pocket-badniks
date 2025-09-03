@@ -1,15 +1,3 @@
-BattleTowerRoomMenu:
-; special
-	call InitBattleTowerChallengeRAM
-	farcall _BattleTowerRoomMenu
-	ret
-
-Function1700ba:
-; special
-	call InitBattleTowerChallengeRAM
-	farcall Function11811a
-	ret
-
 Function1700c4:
 	ldh a, [rWBK]
 	push af
@@ -49,23 +37,6 @@ Function1700c4:
 	call CloseSRAM
 	pop af
 	ldh [rWBK], a
-	ret
-
-Function170114:
-	call InitBattleTowerChallengeRAM
-	call .Function170121
-	farcall Function11805f
-	ret
-
-.Function170121:
-	ld a, BANK(s5_a948)
-	call OpenSRAM
-	ld hl, s5_a948
-	ld de, wc608
-	ld bc, 246
-	call CopyBytes
-	call CloseSRAM
-	call Function170c8b
 	ret
 
 BattleTowerBattle:
@@ -114,7 +85,6 @@ RunBattleTowerTrainer:
 
 	xor a
 	ld [wLinkMode], a
-	farcall StubbedTrainerRankings_Healings
 	farcall HealParty
 	call ReadBTTrainerParty
 	call Clears5_a89a
@@ -1119,7 +1089,7 @@ BattleTowerAction_10:
 	dw .NoAction
 	dw .DoAction1
 	dw .DoAction1
-	dw .Action4
+	dw .Action5
 	dw .Action5
 
 .DoAction1:
@@ -1130,24 +1100,6 @@ BattleTowerAction_10:
 	call CloseSRAM
 
 .NoAction:
-	ret
-
-.Action4:
-	ld a, BANK(s5_b023) ; aka BANK(sOfferReqGender) and BANK(sOfferReqSpecies)
-	call OpenSRAM
-	ld hl, s5_b023
-	ld de, wc608
-	ld bc, 105
-	call CopyBytes
-	ld a, [sOfferReqGender]
-	ld [wcd30], a
-	ld a, [sOfferReqSpecies]
-	ld [wcd31], a
-	call CloseSRAM
-	farcall Function11b6b4
-	farcall Function17d0f3
-	ld a, TRUE
-	ld [wScriptVar], a
 	ret
 
 .Action5:

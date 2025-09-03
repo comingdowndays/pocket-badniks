@@ -52,52 +52,6 @@ BattleTower1FRulesSign:
 	closetext
 	end
 
-BattleTower1FReceptionistScript:
-	setval BATTLETOWERACTION_GET_CHALLENGE_STATE ; readmem sBattleTowerChallengeState
-	special BattleTowerAction
-	ifequal $3, Script_BeatenAllTrainers2 ; maps/BattleTowerBattleRoom.asm
-	opentext
-	writetext Text_BattleTowerWelcomesYou
-	promptbutton
-	setval BATTLETOWERACTION_CHECK_EXPLANATION_READ ; if new save file: bit 1, [sBattleTowerSaveFileFlags]
-	special BattleTowerAction
-	ifnotequal $0, Script_Menu_ChallengeExplanationCancel
-	sjump Script_BattleTowerIntroductionYesNo
-
-Script_Menu_ChallengeExplanationCancel:
-	writetext Text_WantToGoIntoABattleRoom
-	setval TRUE
-	special Menu_ChallengeExplanationCancel
-	ifequal 1, Script_ChooseChallenge
-	ifequal 2, Script_BattleTowerExplanation
-	sjump Script_BattleTowerHopeToServeYouAgain
-
-Script_ChooseChallenge:
-	setval BATTLETOWERACTION_RESETDATA ; ResetBattleTowerTrainerSRAM
-	special BattleTowerAction
-	special CheckForBattleTowerRules
-	ifnotequal FALSE, Script_WaitButton
-	writetext Text_SaveBeforeEnteringBattleRoom
-	yesorno
-	iffalse Script_Menu_ChallengeExplanationCancel
-	setscene SCENE_BATTLETOWER1F_CHECKSTATE
-	special TryQuickSave
-	iffalse Script_Menu_ChallengeExplanationCancel
-	setscene SCENE_BATTLETOWER1F_NOOP
-	setval BATTLETOWERACTION_SET_EXPLANATION_READ ; set 1, [sBattleTowerSaveFileFlags]
-	special BattleTowerAction
-	special BattleTowerRoomMenu
-	ifequal $a, Script_Menu_ChallengeExplanationCancel
-	ifnotequal $0, Script_MobileError
-	setval BATTLETOWERACTION_11
-	special BattleTowerAction
-	writetext Text_RightThisWayToYourBattleRoom
-	waitbutton
-	closetext
-	setval BATTLETOWERACTION_CHOOSEREWARD
-	special BattleTowerAction
-	sjump Script_WalkToBattleTowerElevator
-
 Script_ResumeBattleTowerChallenge:
 	closetext
 	setval BATTLETOWERACTION_LOADLEVELGROUP ; load choice of level group
@@ -138,57 +92,11 @@ Script_YourPackIsStuffedFull:
 	closetext
 	end
 
-Script_BattleTowerIntroductionYesNo:
-	writetext Text_WouldYouLikeToHearAboutTheBattleTower
-	yesorno
-	iffalse Script_BattleTowerSkipExplanation
-Script_BattleTowerExplanation:
-	writetext Text_BattleTowerIntroduction_2
-Script_BattleTowerSkipExplanation:
-	setval BATTLETOWERACTION_SET_EXPLANATION_READ
-	special BattleTowerAction
-	sjump Script_Menu_ChallengeExplanationCancel
-
 Script_BattleTowerHopeToServeYouAgain:
 	writetext Text_WeHopeToServeYouAgain
 	waitbutton
 	closetext
 	end
-
-Script_WaitButton:
-	waitbutton
-	closetext
-	end
-
-.zero
-	writetext Text_CantBeRegistered
-.continue
-	yesorno
-	iffalse Script_Menu_ChallengeExplanationCancel
-	writetext Text_SaveBeforeReentry
-	yesorno
-	iffalse Script_Menu_ChallengeExplanationCancel
-	setscene SCENE_BATTLETOWER1F_CHECKSTATE
-	special TryQuickSave
-	iffalse Script_Menu_ChallengeExplanationCancel
-	setscene SCENE_BATTLETOWER1F_NOOP
-	setval BATTLETOWERACTION_06
-	special BattleTowerAction
-	setval BATTLETOWERACTION_12
-	special BattleTowerAction
-	writetext Text_RightThisWayToYourBattleRoom
-	waitbutton
-	sjump Script_ResumeBattleTowerChallenge
-
-Script_AMonLevelExceeds:
-	writetext Text_AMonLevelExceeds
-	waitbutton
-	sjump Script_Menu_ChallengeExplanationCancel
-
-Script_MayNotEnterABattleRoomUnderL70:
-	writetext Text_MayNotEnterABattleRoomUnderL70
-	waitbutton
-	sjump Script_Menu_ChallengeExplanationCancel
 
 Script_MobileError:
 	special BattleTowerMobileError
@@ -625,7 +533,7 @@ BattleTower1F_MapEvents:
 	bg_event  6,  6, BGEVENT_READ, BattleTower1FRulesSign
 
 	def_object_events
-	object_event  7,  6, SPRITE_RECEPTIONIST, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, BattleTower1FReceptionistScript, -1
+	object_event  7,  6, SPRITE_RECEPTIONIST, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, BattleTower1FYoungsterScript, -1
 	object_event 14,  9, SPRITE_YOUNGSTER, SPRITEMOVEDATA_STANDING_RIGHT, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_SCRIPT, 0, BattleTower1FYoungsterScript, -1
 	object_event  4,  9, SPRITE_COOLTRAINER_F, SPRITEMOVEDATA_WALK_LEFT_RIGHT, 1, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, BattleTower1FCooltrainerFScript, -1
 	object_event  1,  3, SPRITE_BUG_CATCHER, SPRITEMOVEDATA_WANDER, 1, 1, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, BattleTower1FBugCatcherScript, -1

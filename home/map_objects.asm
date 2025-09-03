@@ -300,7 +300,7 @@ CheckObjectTime::
 	scf
 	ret
 
-CopyMapObjectStruct:: ; unreferenced
+CopyMapObjectStruct:: ; could be useful
 	ldh [hMapObjectIndex], a
 	call GetMapObject
 	call CopyObjectStruct

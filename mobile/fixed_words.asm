@@ -1325,7 +1325,7 @@ Function11c86e:
 	jr nz, .asm_11c8c2
 	ret
 
-BCD2String: ; unreferenced
+BCD2String: ; could be useful
 	inc a
 	push af
 	and $f
@@ -1346,9 +1346,6 @@ BCD2String: ; unreferenced
 	add "０"
 	ld [hli], a
 	ret
-
-MobileString_Page: ; unreferenced
-	db "ぺージ@"
 
 MobileString_Prev:
 	db "まえ@"

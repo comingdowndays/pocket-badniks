@@ -102,7 +102,7 @@ CheckReceivedDex::
 	and a
 	ret
 
-CheckBPressedDebug:: ; unreferenced
+CheckBPressedDebug:: ; could be useful
 ; Used in debug ROMs to walk through walls and avoid encounters.
 
 	ld a, [wDebugFlags]
@@ -122,7 +122,7 @@ xor_a_dec_a::
 	dec a
 	ret
 
-CheckFieldDebug:: ; unreferenced
+CheckFieldDebug:: ; could be useful
 	push hl
 	ld hl, wDebugFlags
 	bit DEBUG_FIELD_F, [hl]

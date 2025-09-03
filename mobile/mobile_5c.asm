@@ -146,69 +146,6 @@ CheckBTMonMovesForErrors:
 	jr nz, .loop
 	ret
 
-Function170cc6:
-	ldh a, [rWBK]
-	push af
-	ld a, BANK(wDecompressScratch)
-	ldh [rWBK], a
-	ld hl, PichuAnimatedMobileGFX
-	ld de, wDecompressScratch
-	call Decompress
-	ld a, 1
-	ldh [rVBK], a
-	ld de, wDecompressScratch
-	ld hl, vTiles0
-	lb bc, BANK(wDecompressScratch), 193
-	call Get2bpp
-	xor a
-	ldh [rVBK], a
-	ld hl, ElectroBallMobileGFX
-	ld de, wDecompressScratch
-	call Decompress
-	ld de, wBGPals1
-	ld hl, vTiles0
-	lb bc, BANK(wDecompressScratch), 83
-	call Get2bpp
-	pop af
-	ldh [rWBK], a
-	ret
-
-Function170d02:
-	ld a, $1
-	ldh [rVBK], a
-	ld de, PichuBorderMobileGFX
-	ld hl, vTiles0 tile $c1
-	lb bc, BANK(PichuBorderMobileGFX), 24
-	call Get2bpp
-	xor a
-	ldh [rVBK], a
-	ret
-
-PichuAnimatedMobileGFX:
-ElectroBallMobileGFX:
-PichuBorderMobileGFX:
-Function1719c8:
-	ldh a, [hInMenu]
-	push af
-	ld a, $1
-	ldh [hInMenu], a
-	call Function1719d6
-	pop af
-	ldh [hInMenu], a
-	ret
-
-Function1719d6:
-	farcall BattleTowerRoomMenu_InitRAM
-	call Function1719ed
-	ldh a, [rWBK]
-	push af
-	ld a, $5
-	ldh [rWBK], a
-	call Function171a11
-	pop af
-	ldh [rWBK], a
-	ret
-
 Function1719ed:
 	xor a
 	ld [wcd49], a
@@ -221,38 +158,6 @@ Function1719ed:
 	farcall HDMATransferTilemapAndAttrmap_Overworld
 	farcall ClearSpriteAnims
 	ret
-
-Function171a11:
-.loop
-	call JoyTextDelay
-	ld a, [wcd49]
-	bit 7, a
-	jr nz, .done
-	call Function171a36
-	farcall PlaySpriteAnimations
-	farcall HDMATransferTilemapAndAttrmap_Overworld
-	jr .loop
-.done
-	farcall ClearSpriteAnims
-	call ClearSprites
-	ret
-
-Function171a36:
-	jumptable Jumptable_171a45, wcd49
-
-Jumptable_171a45:
-	dw Function171a95
-	dw Function171ac9
-	dw Function171a5d
-	dw Function171ad7
-	dw Function171a5d
-	dw Function171aec
-	dw Function171b4b
-	dw Function171b85
-	dw Function171bcc
-	dw Function171c2c
-	dw Function171c39
-	dw Function171c41
 
 Function171a5d:
 	ld a, [wc821]
@@ -497,33 +402,10 @@ Function171beb:
 	ld [wcd4c], a
 	call Function171c66
 
-Function171c2c:
-	ld hl, wcd4c
-	dec [hl]
-	ret nz
-	call ExitMenu
-	call ClearBGPalettes
-	jr asm_171c60
-
 Function171c39:
 	ld a, $28
 	ld [wcd4c], a
 	call Function171c66
-
-Function171c41:
-	ld hl, wcd4c
-	dec [hl]
-	ret nz
-	call ClearBGPalettes
-	farcall Stubbed_Function106462
-	farcall Function106464
-	ld a, $2
-	ld [wc303], a
-	farcall DisplayMobileError
-asm_171c60:
-	ld a, $80
-	ld [wcd49], a
-	ret
 
 Function171c66:
 	ld hl, wcd49

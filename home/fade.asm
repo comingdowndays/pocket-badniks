@@ -1,6 +1,6 @@
 ; Functions to fade the screen in and out.
 
-TimeOfDayFade:: ; unreferenced
+TimeOfDayFade:: ; could be useful
 	ld a, [wTimeOfDayPal]
 	ld b, a
 	ld hl, IncGradGBPalTable_11
